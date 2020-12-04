@@ -1,0 +1,4 @@
+url,type,dest,delay
+example.com,RDIR,1.2.3.4
+test.com,BLOC,,
+meow.com,THR,,1500

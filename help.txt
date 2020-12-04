@@ -1,0 +1,24 @@
+List of commands:
+
+block
+	- block a new site
+redirect
+	- redirect a new site
+throttle
+	- throttle a new site
+delblock
+	- delete a site to block
+delredirect
+	- delete a site to redirect
+delthrottle
+	- delete a site to throttle
+viewblock
+	- view list of blocked sites
+viewredirect
+	- view list of redirected sites
+	- also see where sites are redirected to
+viewthrottle
+	- view list of throttled sites
+	- also see the throttle delay
+done
+	- finish editing the block/redirect/throttle listings
