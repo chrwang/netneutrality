@@ -135,7 +135,7 @@ def main():
     if disclaimer_listener():
         # throttle
         list_listener()
-        subprocess.run(["sudo", "./run_dns.sh"])
+        subprocess.run(["sudo", "python", "dns.py"])
     else:
         print("Quitting program.")
 
