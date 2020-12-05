@@ -1,4 +1,2 @@
 NetfilterQueue==0.8.1
-numpy==1.19.4
 scapy==2.4.4
-scipy==1.5.4
