@@ -6,6 +6,6 @@ Net neutrality is the principle that Internet Service Providers (ISPs) must prov
 
 This application simulates the struggles of using Internet services when ISPs do not uphold the net neutrality principle. The obstacles you may encounter while using this app includes but not limited to blocked websites, site redirection, and intentionally slowed traffic. Please note that these features will negatively impact your experiences browsing the web. 
 
-You may quit the application at any time by entering kill -SIGTERM <pid>. 
+You may quit the application at any time by entering ctrl-c. 
 
 Please enter YES to proceed with the application. Enter NO to quit the application now. 

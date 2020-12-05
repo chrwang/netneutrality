@@ -1,7 +1,7 @@
 # DNS Packet Throttler
 This application can only run on Linux.
 
-This program is written in Python and utilizes the NetfilterQueue and scapy libraries. Install NetfilterQueue using the following:
+This program is written in Python 3.6.9 and utilizes the NetfilterQueue and scapy libraries. Install NetfilterQueue using the following:
 
 ```bash
 apt-get install build-essential python-dev libnetfilter-queue-dev
