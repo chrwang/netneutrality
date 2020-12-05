@@ -42,7 +42,7 @@ def list_listener():
     err_msg = "Please enter a valid command.\n"
 
     while no_quit:
-        cmd = str(input(msg)).lower()
+        cmd = str(input(msg)).lower().strip()
         if cmd == "help":
             # print out a list of commands
             print("\n" + list_utilities.view_help())
@@ -104,9 +104,10 @@ def list_listener():
             if len(site_target) == 0:
                 print("\nNo currently redirected site.\n")
             else:
-                print("\nRedirected Sites   Destination")
-                res = [m + "   " + n for m, n in zip(site_target, site_dest)]
-                print("\n".join(res) + "\n")
+                fmt = '{:<50}{}'
+                print(fmt.format('Redirected Sites', 'Destination'))
+                for t, d in zip(site_target, site_dest):
+                    print(fmt.format(t, d))
         elif cmd == "viewthrottle":
             # view list of throttled sites
             # and their delay times
@@ -114,9 +115,10 @@ def list_listener():
             if len(site_target) == 0:
                 print("\nNo currently throttled site.\n")
             else:
-                print("\nThrottled Sites   Delay Time")
-                res = [m + "   " + n for m, n in zip(site_target, site_delay)]
-                print("\n".join(res) + "\n")
+                fmt = '{:<50}{}'
+                print(fmt.format('Throttled Sites', 'Delay Time'))
+                for t, d in zip(site_target, site_delay):
+                    print(fmt.format(t, d))
         elif cmd == "del":
             # delete given site from block list
             target = input("Enter the url of the site to un-process: ")
