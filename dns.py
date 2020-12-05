@@ -18,6 +18,11 @@ RULE = "OUTPUT -p udp --dport 53 -j NFQUEUE --queue-num " + str(QUEUE_NUM)
 
 
 def load_rules(fname):
+    """
+    Load block rules from a file.
+    Arguments:
+        fname: the file path to load from.
+    """
     result = {}
     with open(fname, newline="") as rulefile:
         reader = csv.DictReader(rulefile)
@@ -31,6 +36,12 @@ def load_rules(fname):
 
 
 def rule_in(rdict, url):
+    """
+    Check if a url is in the rules specified by the dictionary.
+    Arguments:
+        rdict: the dictionary to check in.
+        url: the url to check.
+    """
     for k in rdict.keys():
         if k in url:
             return rdict[k]
@@ -38,6 +49,12 @@ def rule_in(rdict, url):
 
 
 def process(rdict, packet):
+    """
+    Process a packet.
+    Arguments:
+        rdict: the rules dict to process packets by.
+        packet: the packet object to process.
+    """
     logging.info(f"Recieved packet {packet}")
     # Get the packet payload from nfqueue
     data = packet.get_payload()

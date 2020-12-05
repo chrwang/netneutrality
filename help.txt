@@ -6,12 +6,8 @@ redirect
 	- redirect a new site
 throttle
 	- throttle a new site
-delblock
-	- delete a site to block
-delredirect
-	- delete a site to redirect
-delthrottle
-	- delete a site to throttle
+del
+	- delete a site from the block/redirect/throttle lists
 viewblock
 	- view list of blocked sites
 viewredirect
