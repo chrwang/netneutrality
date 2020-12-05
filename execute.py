@@ -3,6 +3,13 @@ import subprocess
 import socket
 from urllib.parse import urlparse
 
+def get_hostname(raw_url):
+    parsed_url = urlparse("http://" + raw_url.split("://")[-1])
+    # strip leading www.
+    hostname = parsed_url.netloc
+    prefix = "www."
+    return hostname[len(prefix):] if hostname.startswith(prefix) else hostname
+
 def disclaimer_listener():
     """
     Processes user input to the disclaimer.
@@ -49,50 +56,43 @@ def list_listener():
         elif cmd == "block":
             # add to block list
             target = input("Enter the url of the site to block: ")
-            parsed_url = urlparse(target)
-            if not bool(parsed_url.scheme):
-                print("URL is invalid.")
-            else:
-                list_utilities.add_to_block(target)
-                print("Added " + target + " to blocked sites.\n")
+            hostname = get_hostname(target)
+            list_utilities.add_to_block(hostname)
+            print("Added " + target + " to blocked sites.\n")
         elif cmd == "redirect":
             # add to redirect list
             # and where to redirect to
             target = input("Enter the url of the site to redirect: ")
-            dest = input("Enter the IP of the redirect destination: ")
-            parsed_url = urlparse(target)
+            dest = input("Enter the url of the redirect destination: ")
+            target_hostname = get_hostname(target)
+            dest_hostname = get_hostname(dest)
             try:
-                socket.inet_aton(dest)
-                if not bool(parsed_url.scheme):
-                    print("URL is invalid.")
-                else:
-                    list_utilities.add_to_redirect(target, dest)
-                    print("Added " + target + " to redirected sites. It will be redirected to " + dest + ".\n")
+                dest_ip = socket.gethostbyname(dest_hostname)
+                list_utilities.add_to_redirect(target_hostname, dest_ip)
+                print("Added {} to redirected sites. It will be redirected to {}\n".format(target_hostname, dest_ip))
             except socket.error:
-                print("Redirect IP address is invalid.")
+                print("Redirect url is invalid.")
 
         elif cmd == "throttle":
             # add to throttle list
             # and throttle delay
             target = input("Enter the url of the site to throttle: ")
-            parsed_url = urlparse(target)
-            if not bool(parsed_url.scheme):
-                print("URL is invalid.")
-            else:
-                delay = ''
-                while delay is not int:
-                    try:
-                        dmsg = "Enter the amount of delay time (integer value): "
-                        delay = int(input(dmsg))
-                        break
-                    except ValueError:
-                        print("Please enter a valid number. ")
-                list_utilities.add_to_throttle(target, delay)
-                print("Added " + target + " to throttled sites with a delay time of " + str(delay) + " ms.\n")
+            hostname = get_hostname(target)
+
+            delay = ''
+            while delay is not int:
+                try:
+                    dmsg = "Enter the amount of delay time in ms (integer value): "
+                    delay = int(input(dmsg))
+                    break
+                except ValueError:
+                    print("Please enter a valid number. ")
+            list_utilities.add_to_throttle(target, delay)
+            print("Added {} to throttled sites with a delay time of {} ms.\n".format(hostname, delay))
         elif cmd == "viewblock":
             # view list of blocked sites
             site_target = list_utilities.view_block()
-            if len(site_target) == 0: 
+            if len(site_target) == 0:
                 print("\nNo currently blocked site.\n")
             else:
                 print("\nBlocked sites: ")
@@ -135,7 +135,7 @@ def main():
     if disclaimer_listener():
         # throttle
         list_listener()
-        subprocess.run(["sudo", "python", "dns.py"])
+        subprocess.run(["sudo", "python3", "dns.py", "dns_list", "-v"])
     else:
         print("Quitting program.")
 

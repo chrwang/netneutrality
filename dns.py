@@ -28,7 +28,7 @@ def load_rules(fname):
         reader = csv.DictReader(rulefile)
         for r in reader:
             result[r["url"]] = {
-                "type": r["type"], 
+                "type": r["type"],
                 "dest": r["dest"],
                 "delay": int(r["delay"]) if r["delay"] else 0
             }
@@ -55,7 +55,7 @@ def process(rdict, packet):
         rdict: the rules dict to process packets by.
         packet: the packet object to process.
     """
-    logging.info(f"Recieved packet {packet}")
+    logging.info("Recieved packet {}".format(packet))
     # Get the packet payload from nfqueue
     data = packet.get_payload()
     # Convert it into a scapy packet instance
@@ -69,22 +69,23 @@ def process(rdict, packet):
         d = rule_in(rdict, name)
         if d is not None:
             if d["type"] == "BLOC":
-                logging.info(f"Blocking outgoing packet to {name}")
+                logging.info("Blocking outgoing packet to {}".format(name))
                 rcod = 3
                 ac = 0
                 answ = None
             elif d["type"] == "RDIR":
-                logging.info(f"Redirecting outgoing packet to {name} to {d['dest']}")
+                logging.info("Redirecting outgoing packet to {} to {}".format(name, d['dest']))
                 rcod = 0
                 ac = 1
                 answ = DNSRR(type="A", rrname=pkt[DNS].qd.qname, rdata=d["dest"])
             elif d["type"] == "THR":
-                logging.info(f"Throttling outgoing packet to {name} by {d['delay']} ms")
+                logging.info("Throttling outgoing packet to {} by {} ms".format(name, d['delay']))
                 time.sleep(d["delay"] / 1000)
                 packet.accept()
+                logging.info("Accepted throttled packet to {}".format(name))
                 return
             else:
-                logging.info(f"Accepting packet to {name} normally")
+                logging.info("Accepting packet to {} normally".format(name))
                 packet.accept()
                 return
             # Build a new packet with the rewritten data
