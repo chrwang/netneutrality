@@ -1,6 +1,6 @@
 Welcome to Packet Throttler. 
 
-Packet Throttler is a network throttling application that demonstrates the experience of using internet services in a world without net neutrality. This application is intended for and only for educational purposes. 
+Packet Throttler is a network throttling application that demonstrates the experience of using internet services in a world without net neutrality. This application is intended for and only for educational purposes. The source code for this application is published at https://github.com/chrwang/netneutrality. 
 
 Net neutrality is the principle that Internet Service Providers (ISPs) must provide equal access to the Internet to all its users and may not discriminate based on users, services, websites, etc. Without net neutrality, ISPs may carry out a series of actions, including but not limited to blocking traffic, slow down traffic, establishing paywalls, etc., for monetary purposes that would severely hinder accessibility to Internet services. 
 
